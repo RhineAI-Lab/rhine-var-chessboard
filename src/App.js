@@ -18,18 +18,20 @@ export default function Game() {
   const next = snap.rounds % 2 === 0 ? 'X' : 'O'
   const status = `Next player: ${next}`
 
+  const handleClick = (i, j) => {
+    if (!state.board[i][j]) {
+      state.board[i][j] = next
+      state.rounds++
+    }
+  }
+
   return <div className='game'>
     <div className='game-board'>
       <div className='status'>{status}</div>
       {snap.board.map((row, i) => (
         <div key={i} className='board-row'>
           {row.map((col, j) => (
-            <button key={j} className='square' onClick={() => {
-              if (!state.board[i][j]) {
-                state.board[i][j] = next
-                state.rounds++
-              }
-            }}>
+            <button key={j} className='square' onClick={() => handleClick(i, j)}>
               {snap.board[i][j]}
             </button>
           ))}
